@@ -14,15 +14,15 @@ import model.Role;
 
 
 public class UpdatePermissionsView {
-    private ComboBox<Role>  checkOutBook = new ComboBox<>();
-    private ComboBox<Role>  addBook = new ComboBox<>();
-    private ComboBox<Role>  bookStat = new ComboBox<>();
-    private ComboBox<Role>  manageEmployees = new ComboBox<>();
-    private ComboBox<Role>  librarianStat = new ComboBox<>();
-    private ComboBox<Role>  financeStat= new ComboBox<>();
-    private ComboBox<Role>  manageLibrary= new ComboBox<>();
-    private Button updateBtn = new Button("Update");
-    private HomeButton homeBtn = new HomeButton("Home");
+    private final ComboBox<Role>  checkOutBook = new ComboBox<>();
+    private final ComboBox<Role>  addBook = new ComboBox<>();
+    private final ComboBox<Role>  bookStat = new ComboBox<>();
+    private final ComboBox<Role>  manageEmployees = new ComboBox<>();
+    private final ComboBox<Role>  librarianStat = new ComboBox<>();
+    private final ComboBox<Role>  financeStat= new ComboBox<>();
+    private final ComboBox<Role>  manageLibrary= new ComboBox<>();
+    private final Button updateBtn = new Button("Update");
+    private final HomeButton homeBtn = new HomeButton("Home");
 
     public Scene showView(Stage stage)
     {

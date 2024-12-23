@@ -20,10 +20,10 @@ import dao.AuthorsDAO;
 
 public class AddBookView extends GridPane  {
 
-    private HomeView prevView;
+    private final HomeView prevView;
     private final ValidatingTextField titleTF = new ValidatingTextField(input -> !input.isEmpty());
     private final Label titleLbl = new Label("Title");
-    private ValidatingTextField isbnTF = new ValidatingTextField(input -> input.matches("[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]"));
+    private final ValidatingTextField isbnTF = new ValidatingTextField(input -> input.matches("[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]"));
     private final Label isbnLbl = new Label("ISBN");
     private final ValidatingTextField supplierTF = new ValidatingTextField(input -> !input.isEmpty());
     private final Label supplierLbl = new Label("Supplier");
@@ -39,20 +39,20 @@ public class AddBookView extends GridPane  {
     private final ComboBox<Author> authorComboBox = new ComboBox<>();
     private final Label categoryLbl = new Label("Select a category: ");
     private final ComboBox<String> categoryComboBox = new ComboBox<>();
-    private Button submitBtn = new Button("Submit");
-    private HomeButton backToHomeBtn = new HomeButton("Home");
-    private Button addAuthorButton = new Button(" + Add");
-    private Button addCategoryButton = new Button("+ Add");
-    private Button restockButton = new Button("Restock existing book. ");
-    private Text wrongTitle = new Text("*cannot be empty.");
-    private Text wrongIsbn = new Text("*follow format.");
-    private Text wrongSupplier = new Text("*cannot be empty.");
-    private Text wrongSellingPrice = new Text("*cannot be negative.");
-    private Text wrongPurchasedPrice = new Text("*cannot be negative.");
-    private Text wrongStock = new Text("*cannot be negative.");
-    private Text wrongDescription = new Text("*cannot be empty.");
-    private Text wrongAuthor = new Text("*cannot be empty.");
-    private Text wrongCategory = new Text("*cannot be empty.");
+    private final Button submitBtn = new Button("Submit");
+    private final HomeButton backToHomeBtn = new HomeButton("Home");
+    private final Button addAuthorButton = new Button(" + Add");
+    private final Button addCategoryButton = new Button("+ Add");
+    private final Button restockButton = new Button("Restock existing book. ");
+    private final Text wrongTitle = new Text("*cannot be empty.");
+    private final Text wrongIsbn = new Text("*follow format.");
+    private final Text wrongSupplier = new Text("*cannot be empty.");
+    private final Text wrongSellingPrice = new Text("*cannot be negative.");
+    private final Text wrongPurchasedPrice = new Text("*cannot be negative.");
+    private final Text wrongStock = new Text("*cannot be negative.");
+    private final Text wrongDescription = new Text("*cannot be empty.");
+    private final Text wrongAuthor = new Text("*cannot be empty.");
+    private final Text wrongCategory = new Text("*cannot be empty.");
 
 
     public void setAuthors(){
