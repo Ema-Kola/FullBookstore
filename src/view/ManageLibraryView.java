@@ -20,10 +20,10 @@ import javafx.util.converter.DoubleStringConverter;
 public class ManageLibraryView extends BorderPane {
 
 
-    private HomeView prevView;
+    private final HomeView prevView;
     public TableView<Book> tableView = new TableView<>();
     private final HomeButton btnHome = new HomeButton("Home");
-    private CategoryDAO categoryDao = new CategoryDAO();
+    private final CategoryDAO categoryDao = new CategoryDAO();
 
     private final TableColumn <Book,String> isbnColumn = new TableColumn("ISBN");
     private final TableColumn<Book,String> titleColumn = new TableColumn("Title");
