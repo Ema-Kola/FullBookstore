@@ -13,8 +13,6 @@ import view.LibrarianStatView;
 import java.util.Date;
 import java.util.HashMap;
 
-import model.CustomFunctions;
-
 public class LibrarianStatController {
 
         private final LibrarianStatView view;
