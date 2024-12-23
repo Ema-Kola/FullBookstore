@@ -29,7 +29,7 @@ import model.User;
 public class AddUserView extends GridPane {
 
 
-    private HomeView prevView;
+    private final HomeView prevView;
     private final ValidatingTextField FirstnameTF = new ValidatingTextField(input -> input.matches("[a-zA-Z]+"));
     private final Label FirstnameLbl = new Label("First Name");
     private final ValidatingTextField LastnameTF = new ValidatingTextField(input -> input.matches("[a-zA-Z]+"));
@@ -51,9 +51,9 @@ public class AddUserView extends GridPane {
     private final Label salaryLbl = new Label("Salary");
     private final ComboBox<Role> accessLevelTF = new ComboBox<>();
     private final Label accessLevelLLbl = new Label("Access Level");
-    private Button submitBtn = new Button("Submit");
-    private HomeButton backToHomeBtn = new HomeButton("Home");
-    private UsersDAO user = new UsersDAO();
+    private final Button submitBtn = new Button("Submit");
+    private final HomeButton backToHomeBtn = new HomeButton("Home");
+    private final UsersDAO user = new UsersDAO();
 
     private final Label firstnameWarningLbl = new Label("*enter first name");
     private final Label lastnameWarningLbl = new Label("*enter last name");

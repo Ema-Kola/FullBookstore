@@ -14,7 +14,7 @@ import model.LibrarianStatRecord;
 public class LibrarianStatView extends BorderPane{
 
 
-        private HomeView prevView;
+        private final HomeView prevView;
         private final TableView<LibrarianStatRecord> tableView = new TableView<>();
         private final TableColumn<LibrarianStatRecord, String> nameColumn = new TableColumn<>("Name");
         private final TableColumn<LibrarianStatRecord, Integer> billsColumn = new TableColumn<>("Total Bills");
@@ -24,8 +24,8 @@ public class LibrarianStatView extends BorderPane{
         private final ValidatingTextField toTF = new ValidatingTextField(input -> (input.matches("^(0[1-9]|[1-2][0-9]|3[0-1])-(0[1-9]|1[0-2])-(\\d{4})$")|| input.isEmpty()));
 
         private final Button search = new Button("Search");
-        private Text wrongDate1 = new Text("* dd-mm-yyyy format");
-        private Text wrongDate2 = new Text("* dd-mm-yyyy format");
+        private final Text wrongDate1 = new Text("* dd-mm-yyyy format");
+        private final Text wrongDate2 = new Text("* dd-mm-yyyy format");
         private final TextField searchTF = new TextField();
         private final HomeButton btnHome = new HomeButton("Home");
 

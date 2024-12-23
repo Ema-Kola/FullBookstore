@@ -16,14 +16,14 @@ import model.BillRecord;
 
 public class CheckOutBookView extends BorderPane {
 
-    private HomeView prevView;
+    private final HomeView prevView;
     private final TableView<BillRecord> tableView = new TableView<>();
     private final TableColumn<BillRecord, String> bookNameColumn = new TableColumn<>("Book");
     private final TableColumn<BillRecord, Double> priceColumn= new TableColumn<>("Price");
     private final TableColumn<BillRecord, Integer> quantityColumn = new TableColumn<>("Quantity");
     private final TableColumn<BillRecord, Double> totalRecordColumn = new TableColumn<>("Total");
 
-    private ValidatingTextField isbnTF = new ValidatingTextField(input -> input.matches("[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]"));
+    private final ValidatingTextField isbnTF = new ValidatingTextField(input -> input.matches("[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]"));
 
     private final ValidatingTextField quantityTf = new ValidatingTextField(input -> input.matches("\\d+"));
   ;

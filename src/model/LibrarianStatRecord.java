@@ -4,8 +4,8 @@ package model;
 
 public class LibrarianStatRecord {
 
-        private User employee;
-        private String employeeName;
+        private final User employee;
+        private final String employeeName;
         private int bills;
         private int books;
         private double total;

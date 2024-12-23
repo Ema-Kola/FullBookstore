@@ -17,9 +17,9 @@ public class AddCategoryView {
 
 
 
-    private ValidatingTextField categoryTf = new ValidatingTextField(input ->input.matches("[a-zA-Z]+"));
-    private Label categoryLbl = new Label("New Category: ");
-    private Button sbButton = new Button("Submit");
+    private final ValidatingTextField categoryTf = new ValidatingTextField(input ->input.matches("[a-zA-Z]+"));
+    private final Label categoryLbl = new Label("New Category: ");
+    private final Button sbButton = new Button("Submit");
 
     private final Label categoryWarning = new Label("*enter category");
 

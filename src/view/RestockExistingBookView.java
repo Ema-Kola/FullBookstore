@@ -14,8 +14,8 @@ public class RestockExistingBookView {
 
 
 
-        private ValidatingTextField isbnTF = new ValidatingTextField(input -> input.matches("[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]"));
-        private Label isbnLbl = new Label("ISBN of book: ");
+        private final ValidatingTextField isbnTF = new ValidatingTextField(input -> input.matches("[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]"));
+        private final Label isbnLbl = new Label("ISBN of book: ");
         private final ValidatingTextField quantityTF = new ValidatingTextField(input -> input.matches("\\d+"));
         private final Label quantityLbl = new Label("Quantity: ");
         private final ValidatingTextField purchasedpriceTF = new ValidatingTextField(input -> input.matches("[0-9]+[.,]?[0-9]*"));

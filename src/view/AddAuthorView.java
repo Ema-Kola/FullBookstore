@@ -18,18 +18,18 @@ import model.Gender;
 
 public class AddAuthorView  {
 
-    private ValidatingTextField authorName = new ValidatingTextField(input -> input.matches("[a-zA-Z]+"));
-    private Label authorNameLbl = new Label("Author's Name");
-    private ValidatingTextField authorLastName = new ValidatingTextField(input -> input.matches("[a-zA-Z]+"));
-    private Label authorLastNameLbl = new Label ("Author's LastName");
-    private Label authorGender= new Label("Author's Gender");
-    private ObservableList<Gender> options = FXCollections.observableArrayList(Gender.MALE, Gender.FEMALE, Gender.OTHER);
-    private ComboBox<Gender> gender = new ComboBox(options);
+    private final ValidatingTextField authorName = new ValidatingTextField(input -> input.matches("[a-zA-Z]+"));
+    private final Label authorNameLbl = new Label("Author's Name");
+    private final ValidatingTextField authorLastName = new ValidatingTextField(input -> input.matches("[a-zA-Z]+"));
+    private final Label authorLastNameLbl = new Label ("Author's LastName");
+    private final Label authorGender= new Label("Author's Gender");
+    private final ObservableList<Gender> options = FXCollections.observableArrayList(Gender.MALE, Gender.FEMALE, Gender.OTHER);
+    private final ComboBox<Gender> gender = new ComboBox(options);
 
     private final Label firstnameWarningLbl = new Label("*enter author's first name");
     private final Label lastnameWarningLbl = new Label("*enter author's last name");
     private final Label genderWarningLbl = new Label("*enter author's gender");
-    private Button sbButton = new Button("Submit");
+    private final Button sbButton = new Button("Submit");
 
 
     public Scene showView(Stage stage)

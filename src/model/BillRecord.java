@@ -3,11 +3,11 @@ package model;
 import java.io.Serializable;
 
 public class BillRecord implements Serializable {
-    private Book book;
-    private String bookName;
-    private double price;
-    private double total;
-    private int quantity;
+    private final Book book;
+    private final String bookName;
+    private final double price;
+    private final double total;
+    private final int quantity;
 
     public BillRecord(Book book, int quantity){
         this.book=book;

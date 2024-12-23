@@ -23,11 +23,11 @@ import javafx.scene.text.Font;
 
 
 public class LogInView extends Parent {
-    private TextField emailF = new TextField();
-    private PasswordField passwF = new PasswordField();
-    private Button loginBtn = new Button("Log in");
-    private Text wrongUsernameF=new Text();
-    private Text wrongPasswordF=new Text();
+    private final TextField emailF = new TextField();
+    private final PasswordField passwF = new PasswordField();
+    private final Button loginBtn = new Button("Log in");
+    private final Text wrongUsernameF=new Text();
+    private final Text wrongPasswordF=new Text();
     private Stage stage;
 
     public Scene showView(Stage stage) {

@@ -3,15 +3,15 @@ package model;
 import java.util.Date;
 
 public class BookStatRecord {
-    private String authorName;
-    private String category;
-    private Book book;
-    private String bookName;
-    private String isbn;
+    private final String authorName;
+    private final String category;
+    private final Book book;
+    private final String bookName;
+    private final String isbn;
     private int sold;
     private int bought;
 
-    private Date timePeriod;
+    private final Date timePeriod;
 
     private String timeForColumn;
 
