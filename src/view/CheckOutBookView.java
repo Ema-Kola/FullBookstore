@@ -34,13 +34,10 @@ public class CheckOutBookView extends BorderPane {
     private final Button btnDelete = new Button("Delete");
     private final Button btnPrint = new Button("Print Bill");
     private final HomeButton btnHome = new HomeButton("Home");
-
-
-
-        public CheckOutBookView(HomeView prevView){
+    public CheckOutBookView(HomeView prevView){
             this.prevView = prevView;
 
-        }
+    }
 
     public Text getTotalTf() {
         return totalTf;
@@ -134,8 +131,5 @@ public class CheckOutBookView extends BorderPane {
     public HomeView getPrevView() {
             return prevView;
         }
-
-
-
 
 }
