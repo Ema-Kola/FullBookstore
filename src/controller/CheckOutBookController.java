@@ -1,5 +1,4 @@
 package controller;
-
 import dao.BooksDAO;
 import dao.CustomerBillDAO;
 import javafx.collections.ObservableList;
@@ -14,72 +13,68 @@ import model.CustomerBill;
 import view.CheckOutBookView;
 import view.HomeView;
 
-
 public class CheckOutBookController {
+    private final CheckOutBookView view;
+    private BooksDAO booksDAO;
+    private final CustomerBillDAO customerBillDAO;
+    private final CustomerBill customerBill;
+
+    public CheckOutBookController(Stage stage, HomeView prevView){
+        this.view = new CheckOutBookView(prevView);
+        this.booksDAO = new BooksDAO();
+        this.customerBillDAO = new CustomerBillDAO();
+        this.customerBill = new CustomerBill(prevView.getCurrentUser());
+
+        view.getBtnAdd().disableProperty().bind(view.getIsbnTF().isValid().not().or(view.getQuantityTf().isValid().not()));
+
+        this.view.getTableView().setItems(customerBill.getBillRecords());
+        this.view.getBtnHome().setOnAction(e -> {stage.setScene(prevView.showView(stage));});
+        this.view.getBtnAdd().setOnAction(e -> onRecordAdd());
+        this.view.getBtnDelete().setOnAction(e -> onRecordDelete());
+        this.view.getBtnPrint().setOnAction(e -> onPrintBill());
+    }
 
 
-        private final CheckOutBookView view;
-        private final BooksDAO booksDAO;
-        private final CustomerBillDAO customerBillDAO;
-        private final CustomerBill customerBill;
-
-        public CheckOutBookController(Stage stage, HomeView prevView){
-            this.view = new CheckOutBookView(prevView);
-            this.booksDAO = new BooksDAO();
-            this.customerBillDAO = new CustomerBillDAO();
-            this.customerBill = new CustomerBill(prevView.getCurrentUser());
-
-            view.getBtnAdd().disableProperty().bind(view.getIsbnTF().isValid().not().or(view.getQuantityTf().isValid().not()));
-
-            this.view.getTableView().setItems(customerBill.getBillRecords());
-            this.view.getBtnHome().setOnAction(e -> {stage.setScene(prevView.showView(stage));});
-            this.view.getBtnAdd().setOnAction(e -> onRecordAdd());
-            this.view.getBtnDelete().setOnAction(e -> onRecordDelete());
-            this.view.getBtnPrint().setOnAction(e -> onPrintBill());
-
-        }
-
-
-        private void onPrintBill(){
-            customerBill.setBillNo(customerBillDAO.getAll().size()+1);
-            if(customerBill.getBillRecords().isEmpty()){
-                Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setContentText("Nothing to print. No books are checked out.");
-                a.showAndWait();
-            }else{
-                if(customerBillDAO.create(customerBill)){
-                    System.out.println("Customer Bill saved successfully.");
-                    if(customerBillDAO.printBill(customerBill)){
-                        System.out.println("BillNo.txt file created successfully.");
-                        for (BillRecord b : customerBill.getBillRecords()) {
-                            Book bookToUpdate=booksDAO.searchBook(b.getBook().getIsbn());
-                            if(bookToUpdate!=null){
-                                bookToUpdate.setStock(bookToUpdate.getStock()-b.getQuantity());
-                            }else{
-                                System.out.println("Book was not found.");
-                                break;
-                            }
-                        }
-                        if(booksDAO.updateAll()){
-                            System.out.println("Books updated successfully.");
+    private void onPrintBill(){
+        customerBill.setBillNo(customerBillDAO.getAll().size()+1);
+        if(customerBill.getBillRecords().isEmpty()){
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setContentText("Nothing to print. No books are checked out.");
+            a.showAndWait();
+        }else{
+            if(customerBillDAO.create(customerBill)){
+                System.out.println("Customer Bill saved successfully.");
+                if(customerBillDAO.printBill(customerBill)){
+                    System.out.println("BillNo.txt file created successfully.");
+                    for (BillRecord b : customerBill.getBillRecords()) {
+                        Book bookToUpdate=booksDAO.searchBook(b.getBook().getIsbn());
+                        if(bookToUpdate!=null){
+                            bookToUpdate.setStock(bookToUpdate.getStock()-b.getQuantity());
                         }else{
-                            System.out.println("Could not update books.");
+                            System.out.println("Book was not found.");
+                            break;
                         }
-
-                        Stage billStage = new Stage();
-                        billStage.setScene(new Scene(new Pane(new Text(customerBill.toString())), 400,400));
-                        billStage.showAndWait();
-                        this.view.getTableView().getItems().clear();
-                        this.view.getIsbnTF().clear();
-                        this.view.getQuantityTf().clear();
                     }
-                }else{
-                    System.out.println("Operation failed. Customer Bill was not created.");
-                }
+                    if(booksDAO.updateAll()){
+                        System.out.println("Books updated successfully.");
+                    }else{
+                        System.out.println("Could not update books.");
+                    }
 
+                    Stage billStage = new Stage();
+                    billStage.setScene(new Scene(new Pane(new Text(customerBill.toString())), 400,400));
+                    billStage.showAndWait();
+                    this.view.getTableView().getItems().clear();
+                    this.view.getIsbnTF().clear();
+                    this.view.getQuantityTf().clear();
+                }
+            }else{
+                System.out.println("Operation failed. Customer Bill was not created.");
             }
-            this.view.getTotalTf().setText("Total:\t "+customerBill.getTotal()+" leke");
+
         }
+        this.view.getTotalTf().setText("Total:\t "+customerBill.getTotal()+" leke");
+    }
 
 
     private void onRecordAdd() {
@@ -103,7 +98,12 @@ public class CheckOutBookController {
                 }
             }
             if (!bookAlreadyCheckedOut) {
-                if (quantity > newbook.getStock()) {
+                if(quantity  == 0){
+                    Alert a = new Alert(Alert.AlertType.ERROR);
+                    a.setContentText("Enter a valid quantity.");
+                    a.showAndWait();
+                }
+                else if (quantity > newbook.getStock()) {
                     Alert a = new Alert(Alert.AlertType.ERROR);
                     a.setContentText("Not enough books in stock. Only " + newbook.getStock() + " left.");
                     a.showAndWait();
@@ -135,6 +135,6 @@ public class CheckOutBookController {
     public CheckOutBookView getView() {
         return view;
     }
-
+    public void setDao(BooksDAO booksDao){ this.booksDAO = booksDao; }
 
 }
