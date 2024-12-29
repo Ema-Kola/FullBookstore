@@ -25,7 +25,7 @@ import model.Book;
 
 public class SearchBookView extends BorderPane{
 
-    private HomeView prevView;
+    private final HomeView prevView;
     public TableView<Book> tableView = new TableView<>();
     private final HomeButton btnHome = new HomeButton("Home");
 

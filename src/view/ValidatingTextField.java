@@ -7,7 +7,7 @@ import javafx.scene.control.TextField;
 
 public class ValidatingTextField extends TextField {
     private final Predicate<String> validation;
-    private BooleanProperty IsValid= new SimpleBooleanProperty();
+    private final BooleanProperty IsValid= new SimpleBooleanProperty();
 
     public BooleanProperty isValid() {
         return IsValid;

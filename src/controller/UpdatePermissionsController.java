@@ -9,7 +9,7 @@ import view.UpdatePermissionsView;
 
 public class UpdatePermissionsController {
 
-        private PermissionsDAO permissionsDAO;
+        private final PermissionsDAO permissionsDAO;
         private final UpdatePermissionsView updatePermissionsView;
 
 

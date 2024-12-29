@@ -8,7 +8,7 @@ public abstract class Bill implements Serializable {
     private static final long serialVersionUID= 1;
 
     private User employee;
-    private Date date;
+    private final Date date;
 
     public Bill(User employee) {
         this.date = new Date();

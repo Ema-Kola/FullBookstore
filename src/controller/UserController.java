@@ -8,7 +8,7 @@ import view.LogInView;
 public class UserController {
 
     private User currentUser;
-    private UsersDAO usersDAO;
+    private final UsersDAO usersDAO;
     private final LogInView logInView;
 
     public UserController(Stage stage){

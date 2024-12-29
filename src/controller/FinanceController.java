@@ -19,8 +19,8 @@ public class FinanceController {
         private final RestockBillDAO restockBillDAO;
         private final PaycheckBillDAO paycheckBillDAO;
         private String timeFilter;
-        private ObservableList<FinanceStatRecord> cacheMonthly = FXCollections.observableArrayList();
-        private ObservableList<FinanceStatRecord> cacheYearly = FXCollections.observableArrayList();
+        private final ObservableList<FinanceStatRecord> cacheMonthly = FXCollections.observableArrayList();
+        private final ObservableList<FinanceStatRecord> cacheYearly = FXCollections.observableArrayList();
 
 
 
@@ -89,7 +89,7 @@ public class FinanceController {
                 }
             }
 
-            if(timeFilter=="Yearly"){
+            if(timeFilter.equals("Yearly")){
                 if(!cacheYearly.isEmpty()){
                     //System.out.println("Cache Vit");
                     return cacheYearly;

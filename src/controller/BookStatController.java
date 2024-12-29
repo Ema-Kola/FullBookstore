@@ -49,13 +49,13 @@ public class BookStatController {
             FilteredList<BookStatRecord> flUser = new FilteredList<>(statRecords, ev->true);
 
             this.view.getSearchBar().textProperty().addListener((ob,oldval,newval)->{
-                if (typeFilter == "Book") {
+                if (Objects.equals(typeFilter, "Book")) {
                     flUser.setPredicate(bookStat->bookStat.getBookName().toLowerCase().trim().contains(newval.toLowerCase().trim()) || bookStat.getTimeForColumn().toLowerCase().trim().contains(newval.toLowerCase().trim()));
                 }
-                else if (typeFilter == "Author") {
+                else if (Objects.equals(typeFilter, "Author")) {
                     flUser.setPredicate(bookStat->bookStat.getBook().getAuthor().toString().toLowerCase().trim().contains(newval.toLowerCase().trim()) || bookStat.getTimeForColumn().toLowerCase().trim().contains(newval.toLowerCase().trim()));
                 }
-                else if (typeFilter == "Category") {
+                else if (Objects.equals(typeFilter, "Category")) {
                     flUser.setPredicate(bookStat->bookStat.getBook().getCategory().toLowerCase().trim().contains(newval.toLowerCase().trim()) || bookStat.getTimeForColumn().toLowerCase().trim().contains(newval.toLowerCase().trim()));
                 }
 
@@ -91,7 +91,7 @@ public class BookStatController {
         for (String x : bills.keySet()) {
             filteredByDate.put(x, new HashMap<>());
             for (BookStatRecord b : bills.get(x)) {
-                if (timeFilter == "Daily") {
+                if (Objects.equals(timeFilter, "Daily")) {
                     Date d = new Date(b.getTimePeriod().getYear(), b.getTimePeriod().getMonth(), b.getTimePeriod().getDate());
                     if (!CustomFunctions.isInSetDaily(b.getTimePeriod(), filteredByDate.get(x).keySet())) {
                         filteredByDate.get(x).put(d, b);
@@ -101,7 +101,7 @@ public class BookStatController {
                     filteredByDate.get(x).get(d).setTimeForColumn(d.getDate() + " " + CustomFunctions.theMonth(d.getMonth()) + " " + (d.getYear() + 1900));
                 }
 
-                if (timeFilter == "Monthly") {
+                if (Objects.equals(timeFilter, "Monthly")) {
                     Date d = new Date(b.getTimePeriod().getYear(), b.getTimePeriod().getMonth(), 1);
                     if (!CustomFunctions.isInSetMonthly(b.getTimePeriod(), filteredByDate.get(x).keySet())) {
                         filteredByDate.get(x).put(d, b);
@@ -111,7 +111,7 @@ public class BookStatController {
                     filteredByDate.get(x).get(d).setTimeForColumn(CustomFunctions.theMonth(d.getMonth()) + " " + (d.getYear() + 1900));
                 }
 
-                if (timeFilter == "Total") {
+                if (Objects.equals(timeFilter, "Total")) {
                     Date d = new Date(b.getTimePeriod().getYear(), 1, 1);
                     if (!CustomFunctions.isInSetYearly(b.getTimePeriod(), filteredByDate.get(x).keySet())) {
                         filteredByDate.get(x).put(d, b);

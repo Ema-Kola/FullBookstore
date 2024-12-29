@@ -28,7 +28,7 @@ import model.User;
 
 public class ManageEmployeeView extends BorderPane{
 
-    private HomeView prevView;
+    private final HomeView prevView;
     public TableView<User> tableView = new TableView<>();
 
     private final TableColumn <User,String> firstNameColumn = new TableColumn<>("First Name");

@@ -1,5 +1,5 @@
 package model;
 
 public enum Role {
-    LIBRARIAN, MANAGER, ADMINISTRATOR;
+    LIBRARIAN, MANAGER, ADMINISTRATOR
 }

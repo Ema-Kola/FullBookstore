@@ -16,7 +16,7 @@ import view.ManageEmployeeView;
 public class ManageEmployeeController {
 
     private final UsersDAO usersDao;
-    private ManageEmployeeView view ;
+    private final ManageEmployeeView view ;
 
     private boolean filterActive;
 

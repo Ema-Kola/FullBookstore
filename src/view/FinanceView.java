@@ -14,7 +14,7 @@ import model.FinanceStatRecord;
 
 public class FinanceView extends BorderPane{
 
-        private HomeView prevView;
+        private final HomeView prevView;
         private final TableView<FinanceStatRecord> tableView = new TableView<>();
         private final TableColumn<FinanceStatRecord, Double> incomeColumn = new TableColumn<>("Income");
         private final TableColumn<FinanceStatRecord, Double> costColumn = new TableColumn<>("Cost");
