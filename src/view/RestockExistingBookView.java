@@ -23,7 +23,7 @@ public class RestockExistingBookView {
 
          private final Text isbnError = new Text();
 
-        private Button restockButton = new Button("Restock");
+        private final Button restockButton = new Button("Restock");
 
 
         public Scene showView(Stage stage)

@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public class HomeView extends Parent {
     private final User currentUser;
-    private UserController prevView;
+    private final UserController prevView;
     ButtonWithPermission addUserButton;
     ButtonWithPermission addBookButton;
     ButtonWithPermission checkOutBookButton;
@@ -38,7 +38,7 @@ public class HomeView extends Parent {
     ButtonWithPermission updatePermissionsButton;
     ButtonWithPermission manageLibraryButton;
     ButtonWithPermission searchBookButton;
-    private Button logOutButton = new Button("LogOut");
+    private final Button logOutButton = new Button("LogOut");
 
 
 
@@ -179,7 +179,7 @@ public class HomeView extends Parent {
 
         HBox g = new HBox();
         g.getChildren().add(operations);
-        try(FileInputStream input1 = new FileInputStream("files/images/bb1-removebg-preview.png");) {
+        try(FileInputStream input1 = new FileInputStream("files/images/bb1-removebg-preview.png")) {
             Image books = new Image(input1);
             ImageView bookStack = new ImageView(books);
             bookStack.setFitWidth(450);

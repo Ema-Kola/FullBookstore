@@ -26,7 +26,7 @@ public class CheckOutBookView extends BorderPane {
     private final ValidatingTextField isbnTF = new ValidatingTextField(input -> input.matches("[0-9]{3}-[0-9]{2}-[0-9]{5}-[0-9]{2}-[0-9]"));
 
     private final ValidatingTextField quantityTf = new ValidatingTextField(input -> input.matches("\\d+"));
-  ;
+
 
     private final Text totalTf = new Text("Total:\t 0 leke");
 

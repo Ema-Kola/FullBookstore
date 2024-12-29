@@ -12,7 +12,7 @@ public class Book implements Serializable {
         private transient StringProperty title;
         private transient StringProperty description;
         private transient StringProperty supplier;
-        private Date purchasedDate;
+        private final Date purchasedDate;
         private double purchasedPrice;
         private double originalPrice;
         private transient DoubleProperty sellingPrice;

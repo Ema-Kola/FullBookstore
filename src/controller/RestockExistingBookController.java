@@ -13,7 +13,7 @@ public class RestockExistingBookController {
 
 
 
-        private BooksDAO booksDAO;
+        private final BooksDAO booksDAO;
         private final RestockExistingBookView restockExistingBookView;
 
 
