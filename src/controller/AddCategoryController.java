@@ -11,10 +11,10 @@ public class AddCategoryController {
         private final CategoryDAO categoryDAO;
         private final AddCategoryView addCategoryView;
 
-
         public AddCategoryController(AddBookView prevView){
             this.addCategoryView = new AddCategoryView();
-            this.categoryDAO=new CategoryDAO();
+
+            categoryDAO=new CategoryDAO();
             addCategoryView.getSubmitButton().disableProperty().bind(addCategoryView.getCategoryTf().textProperty().isEmpty());
 
             addCategoryView.getSubmitButton().setOnAction(e -> {
@@ -51,7 +51,11 @@ public class AddCategoryController {
         }
 
 
+    public void setDao(CategoryDAO categoryDao) {
+            this.categoryDAO = categoryDao;
     }
+
+}
 
 
 
