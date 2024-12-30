@@ -8,7 +8,7 @@ import view.AddBookView;
 public class AddCategoryController {
 
 
-        private final CategoryDAO categoryDAO;
+        private CategoryDAO categoryDAO;
         private final AddCategoryView addCategoryView;
 
         public AddCategoryController(AddBookView prevView){
