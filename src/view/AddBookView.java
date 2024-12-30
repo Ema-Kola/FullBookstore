@@ -1,7 +1,5 @@
 
 package view;
-
-
 import dao.CategoryDAO;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -148,8 +146,7 @@ public class AddBookView extends GridPane  {
         addAuthorButton.setStyle("-fx-background-color: #73c273");
         addCategoryButton.setStyle("-fx-background-color: #73c273");
         //this.setStyle("-fx-background-color: #e0e3f4;");
-        Scene sc = new Scene(this, 800, 600);
-        return sc;
+        return new Scene(this, 800, 600);
     }
 
     public TextField getTitleTF() {
@@ -213,7 +210,7 @@ public class AddBookView extends GridPane  {
     public Text getWrongTitle() {
         return wrongTitle;
     }
-
+    
 }
 
 

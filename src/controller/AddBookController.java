@@ -14,13 +14,23 @@ public class AddBookController {
 
         private BooksDAO booksDAO;
         private final AddBookView addBookView;
+        private Alert alert;
+        private RestockBillDAO restockBillDAO;
+        public void showAlert(Alert.AlertType type, String message) {
+            alert = new Alert(type);
+            alert.setContentText(message);
+            alert.showAndWait();
+        }
 
-
+        public Alert getAlert(){
+            return alert;
+        }
         public AddBookController(Stage stage, HomeView prevView){
             this.addBookView = new AddBookView(prevView);
 
             addBookView.getSubmitBtn().setOnAction(e -> {
-                booksDAO = new BooksDAO();
+                if(booksDAO==null) booksDAO = new BooksDAO();
+
                 String isbn = addBookView.getIsbnTF().getText();
                 String title = addBookView.getTitleTF().getText();
                 String description = addBookView.getDescriptionTA().getText();
@@ -31,9 +41,11 @@ public class AddBookController {
                 int stock = Integer.parseInt(addBookView.getStockTF().getText());
                 Author author = addBookView.getAuthorComboBox().getValue();
                 Book newBook = new Book(isbn,title,description,supplier,purchasedPrice,sellingPrice,author,stock,category);
+
                 if(booksDAO.searchBook(isbn)==null) {
                     if (booksDAO.create(newBook)) {
-                        RestockBillDAO restockBillDAO = new RestockBillDAO();
+                        if(restockBillDAO == null) restockBillDAO = new RestockBillDAO();
+
                         if (restockBillDAO.create(new RestockBill(newBook, prevView.getCurrentUser(), newBook.getStock()))) {
                             System.out.println("Restock Bill saved successfully");
                             //restockBillDAO.printAll();
@@ -42,21 +54,15 @@ public class AddBookController {
                         }
 
                         System.out.println("Book saved successfully");
-                        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                        a.setContentText("Book saved successfully!");
-                        a.showAndWait();
+                        showAlert(Alert.AlertType.CONFIRMATION, "Book saved successfully!");
+
                     } else {
-                        Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setContentText("Failed to save book.");
-                        a.showAndWait();
+                        showAlert(Alert.AlertType.ERROR, "Failed to save book.");
                         System.out.println("Operation failed");
                     }
                 }else{
                     System.out.println("Book with this ISBN already exists in the library.");
-                    Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setContentText("Book with this ISBN already exists in the library.\nGo to the restock button if you want to restock an existing book.");
-                    a.showAndWait();
-
+                    showAlert(Alert.AlertType.ERROR, "Book with this ISBN already exists in the library.\nGo to the restock button if you want to restock an existing book.");
                 }
             });
 
@@ -74,9 +80,7 @@ public class AddBookController {
                 categoryStage.showAndWait();
             });
 
-            addBookView.getHomeBtn().setOnAction(e -> {
-                stage.setScene(prevView.showView(stage));
-            });
+            addBookView.getHomeBtn().setOnAction(e -> stage.setScene(prevView.showView(stage)));
 
             addBookView.getRestockButton().setOnAction(e -> {
                 RestockExistingBookController rc = new RestockExistingBookController(this.getView());
@@ -93,7 +97,11 @@ public class AddBookController {
         }
 
 
-    }
+    public void setDao(BooksDAO booksDao){ this.booksDAO = booksDao; }
+    public void setRestockDao(RestockBillDAO restockDao){ this.restockBillDAO = restockDao; }
+
+
+}
 
 
 
