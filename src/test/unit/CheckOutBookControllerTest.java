@@ -85,9 +85,15 @@ class CheckOutBookControllerTest extends ApplicationTest {
     void BVA_robust_belowMin_onRecordAdd() {
         mockCheckOutBookView.getIsbnTF().setText("123-12-12345-12-1");
         mockCheckOutBookView.getQuantityTf().setText("0");
+
+        checkOutBookController.setDao(mockBooksDAO);
+        Book mockBook = mock(Book.class);
+        when(mockBooksDAO.searchBook("123-12-12345-12-1")).thenReturn(mockBook);
+        when(mockBook.getStock()).thenReturn(10);
         clickOn(mockCheckOutBookView.getBtnAdd());
         waitForFxEvents();
 
+        
         DialogPane dialogPane = lookup(".dialog-pane").query();
         assertNotNull(dialogPane, "is dialog shown");
         //System.out.println(dialogPane.getContentText());
