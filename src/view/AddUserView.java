@@ -1,28 +1,16 @@
 package view;
-import javafx.beans.Observable;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import dao.UsersDAO;
 import javafx.stage.Stage;
 import model.CustomFunctions;
 import model.Gender;
 import model.Role;
-import model.User;
 
 
 
@@ -232,12 +220,8 @@ public class AddUserView extends GridPane {
 
 
 
-        backToHomeBtn.setOnAction(e -> {
-            s.setScene(prevView.showView(s));
-        });
-
-        Scene sc = new Scene(this, 800, 600);
-        return sc;
+        backToHomeBtn.setOnAction(e -> s.setScene(prevView.showView(s)));
+        return new Scene(this, 800, 600);
     }
 
 

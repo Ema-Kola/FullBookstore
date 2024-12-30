@@ -102,10 +102,7 @@ public class BookStatView extends BorderPane {
             this.setTop(vbox);
             this.setCenter(tableView);
 
-
-
-            Scene sc = new Scene(this, 800, 600);
-            return sc;
+            return new Scene(this, 800, 600);
         }
 
 

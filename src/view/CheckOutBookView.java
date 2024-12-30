@@ -91,11 +91,7 @@ public class CheckOutBookView extends BorderPane {
         this.setCenter(tableView);
         this.setBottom(flowPane);
 
-
-
-
-        Scene sc = new Scene(this, 800, 600);
-        return sc;
+        return new Scene(this, 800, 600);
     }
 
     public HomeButton getBtnHome() {
