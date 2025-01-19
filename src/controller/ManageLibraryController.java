@@ -12,17 +12,16 @@ import view.ManageLibraryView;
 
 public class ManageLibraryController {
 
-    private final BooksDAO booksDao;
+    private BooksDAO booksDao;
     private final ManageLibraryView view;
     private boolean filterActive;
 
 
-    public ManageLibraryController(Stage stage,HomeView prevView)
+    public ManageLibraryController(Stage stage,HomeView prevView, BooksDAO booksdao)
     {
         this.view = new ManageLibraryView(prevView);
-        this.booksDao = new BooksDAO();
+        this.booksDao = booksdao;
         filterTable();
-
         this.view.getDeleteButton().setOnAction(e-> {
             deleteBook();
 
@@ -32,11 +31,11 @@ public class ManageLibraryController {
             stage.setScene(prevView.showView(stage));
 
         });
-
         setEditListeners();
 
     }
-    private void filterTable(){
+    public void filterTable(){
+
         FilteredList<Book> activeBooks = new FilteredList<>(booksDao.getAll(),book -> book.isActive()==filterActive);
         FilteredList<Book> books = new FilteredList<>(activeBooks, e -> true);
         view.getChoiceBox().valueProperty().addListener((ob, oldval, newval) -> {
@@ -73,6 +72,9 @@ public class ManageLibraryController {
             }
             else
             {
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setContentText("Description changed!");
+                a.show();
                 FilteredList<Book> activeBooks = new FilteredList<>(booksDao.getAll(),book -> book.isActive()==filterActive);
                 FilteredList<Book> books = new FilteredList<>(activeBooks, e1 -> true);
                 books.get(e.getTablePosition().getRow()).setDescription(e.getNewValue());
@@ -91,6 +93,9 @@ public class ManageLibraryController {
                 FilteredList<Book> activeBooks = new FilteredList<>(booksDao.getAll(),book -> book.isActive()==filterActive);
                 FilteredList<Book> books = new FilteredList<>(activeBooks, e1 -> true);
                 books.get(e.getTablePosition().getRow()).setCategory(e.getNewValue());
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setContentText("Category changed! "+e.getNewValue());
+                a.show();
             }
         });
 
@@ -114,8 +119,10 @@ public class ManageLibraryController {
             {
                 FilteredList<Book> activeBooks = new FilteredList<>(booksDao.getAll(),book -> book.isActive()==filterActive);
                 FilteredList<Book> books = new FilteredList<>(activeBooks, e1 -> true);
-
                 books.get(e.getTablePosition().getRow()).setSellingPrice(e.getNewValue());
+                Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+                a.setContentText("Selling Price changed! "+e.getNewValue());
+                a.show();
             }
         });
 
@@ -165,4 +172,11 @@ public class ManageLibraryController {
     }
 
 
+    public void setDao(BooksDAO booksDao) {
+        this.booksDao =booksDao;
+    }
+
+    public BooksDAO getDao() {
+        return this.booksDao;
+    }
 }

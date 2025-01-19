@@ -8,12 +8,12 @@ import view.LogInView;
 public class UserController {
 
     private User currentUser;
-    private final UsersDAO usersDAO;
+    private UsersDAO usersDAO;
     private final LogInView logInView;
 
     public UserController(Stage stage){
         this.logInView = new LogInView();
-        this.usersDAO =  new UsersDAO();
+        if (this.usersDAO==null) this.usersDAO =  new UsersDAO();
 
         logInView.getLoginBtn().setOnAction(e -> {
             User user = loginUsername(logInView.getEmailF().getText());
@@ -55,6 +55,9 @@ public class UserController {
             return null;
         }
 
+    public void setUsersDAO(UsersDAO usersDAO) {
+        this.usersDAO = usersDAO;
+    }
 }
 
 
