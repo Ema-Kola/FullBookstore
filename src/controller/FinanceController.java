@@ -14,13 +14,13 @@ import java.util.HashMap;
 public class FinanceController {
 
 
-        private final FinanceView view;
-        private final CustomerBillDAO customerBillDAO;
-        private final RestockBillDAO restockBillDAO;
-        private final PaycheckBillDAO paycheckBillDAO;
+        private FinanceView view;
+        private CustomerBillDAO customerBillDAO;
+        private RestockBillDAO restockBillDAO;
+        private PaycheckBillDAO paycheckBillDAO;
         private String timeFilter;
-        private final ObservableList<FinanceStatRecord> cacheMonthly = FXCollections.observableArrayList();
-        private final ObservableList<FinanceStatRecord> cacheYearly = FXCollections.observableArrayList();
+        private ObservableList<FinanceStatRecord> cacheMonthly;
+        private ObservableList<FinanceStatRecord> cacheYearly;
 
 
 
@@ -29,18 +29,19 @@ public class FinanceController {
             this.customerBillDAO = new CustomerBillDAO();
             this.restockBillDAO = new RestockBillDAO();
             this.paycheckBillDAO = new PaycheckBillDAO();
-
+            cacheMonthly = FXCollections.observableArrayList();
+            cacheYearly = FXCollections.observableArrayList();
             this.view.getBtnHome().setOnAction(e -> {stage.setScene(prevView.showView(stage));});
 
             this.view.getChoiceBoxPeriod().getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal)
                     -> {
                 this.timeFilter = newVal;
-                this.view.getTableView().setItems(filterDate());
+                this.view.getTableView().setItems(filterDate(timeFilter));
             });
         }
 
 
-        private ObservableList<FinanceStatRecord> filterDate(){
+        public ObservableList<FinanceStatRecord> filterDate(String timeFilter){
             HashMap<Date, FinanceStatRecord> filteredByDate= new HashMap<>();
             ObservableList<FinanceStatRecord> statList=FXCollections.observableArrayList();
             if(timeFilter.equals("Monthly")){
@@ -99,7 +100,7 @@ public class FinanceController {
                         Date d = new Date(c.getDate().getYear(), 1, 1);
                         if (!CustomFunctions.isInSetYearly(d, filteredByDate.keySet())) {
                             filteredByDate.put(d, new FinanceStatRecord(c.getTotal(), 0, d));
-                            filteredByDate.get(d).setTimeColumn("" + (d.getYear() + 1900));
+                            filteredByDate.get(d).setTimeColumn("" + (d.getYear()+1900));
                         } else {
                             filteredByDate.get(d).updateNums(0, c.getTotal());
                         }
@@ -109,7 +110,7 @@ public class FinanceController {
                         Date d = new Date(c.getDate().getYear(), 1, 1);
                         if (!CustomFunctions.isInSetYearly(d, filteredByDate.keySet())) {
                             filteredByDate.put(d, new FinanceStatRecord(0, c.getTotal(), d));
-                            filteredByDate.get(d).setTimeColumn("" + (d.getYear() + 1900));
+                            filteredByDate.get(d).setTimeColumn("" + (d.getYear()+1900));
                         } else {
                             filteredByDate.get(d).updateNums(c.getTotal(), 0);
                         }
@@ -121,7 +122,7 @@ public class FinanceController {
                         Date d = new Date(c.getDate().getYear(), 1, 1);
                         if (!CustomFunctions.isInSetYearly(d, filteredByDate.keySet())) {
                             filteredByDate.put(d, new FinanceStatRecord(0, c.getTotal(), d));
-                            filteredByDate.get(d).setTimeColumn("" + (d.getYear() + 1900));
+                            filteredByDate.get(d).setTimeColumn("" + (d.getYear()+1900));
                         } else {
                             filteredByDate.get(d).updateNums(c.getTotal(), 0);
                         }
@@ -148,6 +149,24 @@ public class FinanceController {
         }
 
 
+    public void setCustomerBillDAO(CustomerBillDAO customerBillDao) {
+            this.customerBillDAO = customerBillDao;
+    }
 
 
+    public void setRestockBillDAO(RestockBillDAO restockBillDAO) {
+            this.restockBillDAO = restockBillDAO;
+    }
+
+    public void setPaycheckBillDAO(PaycheckBillDAO paycheckBillDAO) {
+            this.paycheckBillDAO = paycheckBillDAO;
+    }
+
+    public void setCacheMonthly(ObservableList<FinanceStatRecord> cacheMonthly) {
+            this.cacheMonthly = cacheMonthly;
+    }
+
+    public void setCacheYearly(ObservableList<FinanceStatRecord> cacheYearly) {
+            this.cacheYearly = cacheYearly;
+    }
 }
