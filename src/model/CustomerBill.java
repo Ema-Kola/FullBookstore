@@ -23,6 +23,11 @@ public class CustomerBill extends Bill {
         super(employee);
         billRecords=FXCollections.observableArrayList();
     }
+    public CustomerBill(User employee, Date d) {
+        super(employee);
+        billRecords=FXCollections.observableArrayList();
+        this.setDate(d);
+    }
 
     public ObservableList<BillRecord> getBillRecords() {
         return billRecords;

@@ -9,13 +9,33 @@ import view.UpdatePermissionsView;
 
 public class UpdatePermissionsController {
 
-        private final PermissionsDAO permissionsDAO;
+        private PermissionsDAO permissionsDAO;
         private final UpdatePermissionsView updatePermissionsView;
 
+    public void setPermissionsDAO(PermissionsDAO permissionsDAO) {
+        this.permissionsDAO = permissionsDAO;
+    }
 
-        public UpdatePermissionsController(Stage stage, HomeView prevView){
+    private final Alert successAlert;
+    private final Alert errorAlert;
+
+    public Alert getErrorAlert() {
+        return errorAlert;
+    }
+
+    public Alert getSuccessAlert() {
+        return successAlert;
+    }
+
+    public UpdatePermissionsController(Stage stage, HomeView prevView){
             updatePermissionsView = new UpdatePermissionsView();
             permissionsDAO = new PermissionsDAO();
+
+            successAlert = new Alert(Alert.AlertType.CONFIRMATION);
+            successAlert.setContentText("Permissions updated successfully!");
+
+            errorAlert= new Alert(Alert.AlertType.ERROR);
+            errorAlert.setContentText("Failed to update permissions.");
 
 
             updatePermissionsView.getUpdateBtn().setOnAction(e -> {
@@ -31,14 +51,10 @@ public class UpdatePermissionsController {
 
                     if (permissionsDAO.updateAll()) {
                         System.out.println("Permissions updated successfully!");
-                        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                        a.setContentText("Permissions updated successfully!");
-                        a.showAndWait();
+                        successAlert.showAndWait();
                     } else{
                         System.out.println("Operation failed");
-                        Alert a = new Alert(Alert.AlertType.ERROR);
-                        a.setContentText("Failed to update permissions.");
-                        a.showAndWait();
+                        errorAlert.showAndWait();
                     }
 
             });

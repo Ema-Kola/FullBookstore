@@ -16,8 +16,18 @@ import java.util.HashMap;
 public class LibrarianStatController {
 
         private final LibrarianStatView view;
-        private final CustomerBillDAO customerBillDAO;
-        private final UsersDAO usersDAO;
+
+    public void setCustomerBillDAO(CustomerBillDAO customerBillDAO) {
+        this.customerBillDAO = customerBillDAO;
+    }
+
+    private CustomerBillDAO customerBillDAO;
+
+    public void setUsersDAO(UsersDAO usersDAO) {
+        this.usersDAO = usersDAO;
+    }
+
+    private UsersDAO usersDAO;
 
 
         public LibrarianStatController(Stage stage, HomeView prevView){

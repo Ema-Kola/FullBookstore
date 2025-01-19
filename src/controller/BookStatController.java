@@ -14,18 +14,38 @@ public class BookStatController {
 
 
     private final BookStatView view;
-    private final BooksDAO booksDAO;
-    private final CustomerBillDAO customerBillDAO;
-    private final RestockBillDAO restockBillDAO;
+    private BooksDAO booksDAO;
+    private CustomerBillDAO customerBillDAO;
+    private RestockBillDAO restockBillDAO;
     private String timeFilter;
     private String typeFilter;
     private final HashMap<String, ArrayList<BookStatRecord>> billsByBook = new HashMap<>();
-    private final AuthorsDAO authorsDAO;
+
+    public void setAuthorsDAO(AuthorsDAO authorsDAO) {
+        this.authorsDAO = authorsDAO;
+    }
+
+    private AuthorsDAO authorsDAO;
     private final HashMap<String, ArrayList<BookStatRecord>> billsByAuthor = new HashMap<>();
-    private final CategoryDAO categoryDAO;
+
+    public void setCategoryDAO(CategoryDAO categoryDAO) {
+        this.categoryDAO = categoryDAO;
+    }
+
+    private CategoryDAO categoryDAO;
     private final HashMap<String, ArrayList<BookStatRecord>> billsByCategory = new HashMap<>();
 
     private ObservableList<BookStatRecord> statRecords = FXCollections.observableArrayList();
+
+    public void setBooksDAO(BooksDAO booksDAO) {
+        this.booksDAO = booksDAO;
+    }
+    public void setCustomerBillDAO(CustomerBillDAO customerBillDAO) {
+        this.customerBillDAO = customerBillDAO;
+    }
+    public void setRestockBillDAO(RestockBillDAO restockBillDAO) {
+        this.restockBillDAO = restockBillDAO;
+    }
 
     public BookStatController(Stage stage, HomeView prevView) {
         this.view = new BookStatView(prevView);
