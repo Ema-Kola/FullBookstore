@@ -22,6 +22,10 @@ public class Book implements Serializable {
         private boolean active;
 
 
+        public Book(){
+            this.purchasedDate= new Date();
+        }
+
     public Book(String isbn, String title, String description, String supplier, double purchasedPrice, double sellingPrice, Author author, int stock, String category) {
             this.isbn = new SimpleStringProperty(isbn);
             this.title = new SimpleStringProperty(title);

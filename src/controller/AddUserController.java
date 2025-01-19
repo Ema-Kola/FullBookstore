@@ -13,12 +13,25 @@ public class AddUserController {
     private UsersDAO userDao;
     private final AddUserView addUserView;
 
+    private final Alert alert1;
+    private final Alert alert2;
+    private final Alert alert3;
+
+
     public AddUserController (Stage stage, HomeView prevView)
     {
-        this.addUserView = new AddUserView(prevView);
+        alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+        alert1.setContentText("User saved successfully!");
 
+        alert2 = new Alert(Alert.AlertType.ERROR);
+        alert2.setContentText("Failed to save user.");
+
+        alert3 = new Alert(Alert.AlertType.ERROR);
+        alert3.setContentText("This user already exists. ");
+        this.addUserView = new AddUserView(prevView);
+        setUserDao(new UsersDAO());
         addUserView.getSubmitBtn().setOnAction(e->{
-            userDao = new UsersDAO();
+
             String firstName = addUserView.getFirstnameTF().getText();
             String lastName = addUserView.getLastnameTF().getText();
             Date birthdate = CustomFunctions.convertDate(addUserView.getbirthdayTF().getText());
@@ -35,18 +48,12 @@ public class AddUserController {
             {
                 if(userDao.create(newUser)) {
                     System.out.println(newUser);
-                    Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-                    a.setContentText("User saved succesfully!");
-                    a.showAndWait();
+                    alert1.showAndWait();
                 }else{
-                    Alert a = new Alert(Alert.AlertType.ERROR);
-                    a.setContentText("Failed to save user.");
-                    a.showAndWait();
+                    alert2.showAndWait();
                 }
                 } else {
-                Alert a = new Alert(Alert.AlertType.ERROR);
-                a.setContentText("User already exists.");
-                a.showAndWait();
+                    alert3.showAndWait();
             }
 
 
@@ -55,9 +62,25 @@ public class AddUserController {
 
 
     }
+
+
+    public void setUserDao(UsersDAO userDao) {
+        this.userDao = userDao;
+    }
     public AddUserView getView()
     {
         return this.addUserView;
+    }
+    public Alert getAlert1() {
+        return alert1;
+    }
+
+    public Alert getAlert2() {
+        return alert2;
+    }
+
+    public Alert getAlert3() {
+        return alert3;
     }
 
 }

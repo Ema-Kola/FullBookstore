@@ -1,8 +1,5 @@
-
 package controller;
-
 import dao.UsersDAO;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.Alert;
@@ -15,15 +12,41 @@ import view.ManageEmployeeView;
 
 public class ManageEmployeeController {
 
-    private final UsersDAO usersDao;
+    private UsersDAO usersDao;
     private final ManageEmployeeView view ;
 
     private boolean filterActive;
 
-    public ManageEmployeeController(Stage stage,HomeView prevView)
+    private final Alert alertSuccess;
+
+    public Alert getAlertSuccess() {
+        return alertSuccess;
+    }
+    private final Alert alertFail;
+
+    public Alert getAlertFail() {
+        return alertFail;
+    }
+
+
+
+    public void setUsersDao(UsersDAO usersDao) {
+        this.usersDao = usersDao;
+    }
+    public ManageEmployeeController(Stage stage,HomeView prevView,UsersDAO usersDao)
     {
+
+        alertSuccess = new Alert(Alert.AlertType.CONFIRMATION);
+        alertSuccess.setContentText("User status updated successfully");
+        alertSuccess.setTitle("Successful");
+
+        alertFail = new Alert(Alert.AlertType.ERROR);
+        alertFail.setContentText("User status not updated");
+        alertFail.setTitle("ERROR");
+
+        this.usersDao = usersDao;
         this.view = new ManageEmployeeView(prevView);
-        this.usersDao = new UsersDAO();
+
         //filterActive = true;
         filterTable();
         this.view.getDeleteBtn().setOnAction(e -> FireEmployee());
@@ -61,7 +84,7 @@ public class ManageEmployeeController {
 
     }
 
-    private void FireEmployee() {
+    public void FireEmployee() {
         ObservableList<User> selectedEmployees = this.view.getTableView().getSelectionModel().getSelectedItems();
         for(User u : selectedEmployees){
             u.setActive(!filterActive);
@@ -69,23 +92,13 @@ public class ManageEmployeeController {
 
         if (usersDao.updateAll()) {
             filterTable();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("User status updated successfully");
-            alert.setTitle("Successful");
-            alert.showAndWait();
+            alertSuccess.showAndWait();
         } else {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("User status not updated");
-            alert.setTitle("ERROR");
-            alert.showAndWait();
+            alertFail.showAndWait();
 
         }
 
     }
-
-
-
 
 
 

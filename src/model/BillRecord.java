@@ -17,6 +17,7 @@ public class BillRecord implements Serializable {
         this.total = price*quantity;
     }
 
+
     public Book getBook() {
         return book;
     }

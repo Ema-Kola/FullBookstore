@@ -2,6 +2,7 @@ package model;
 
 
 import java.io.Serial;
+import java.util.Date;
 
 public class RestockBill extends Bill {
 
@@ -15,6 +16,12 @@ public class RestockBill extends Bill {
             setPurchasedBook(book);
             setQuantity(quantity);
         }
+    public RestockBill(Book book, User employee, int quantity, Date d) {
+        super(employee);
+        setPurchasedBook(book);
+        setQuantity(quantity);
+        this.setDate(d);
+    }
 
         public Book getPurchasedBook() {
             return purchasedBook;

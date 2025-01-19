@@ -12,17 +12,25 @@ import view.RestockExistingBookView;
 public class RestockExistingBookController {
 
 
+    public void setBooksDAO(BooksDAO booksDAO) {
+        this.booksDAO = booksDAO;
+    }
 
-        private final BooksDAO booksDAO;
+    private BooksDAO booksDAO;
         private final RestockExistingBookView restockExistingBookView;
+
+    public void setRestockBillDAO(RestockBillDAO restockBillDAO) {
+        this.restockBillDAO = restockBillDAO;
+    }
+
+    private RestockBillDAO restockBillDAO;
 
 
         public RestockExistingBookController(AddBookView prevView){
             this.restockExistingBookView = new RestockExistingBookView();
             restockExistingBookView.getRestockButton().disableProperty().bind((restockExistingBookView.getIsbnTF().isValid().not()).or(restockExistingBookView.getPurchasedpriceTF().isValid().not()).or(restockExistingBookView.getQuantityTF().isValid().not()));
             booksDAO=new BooksDAO();
-
-
+            restockBillDAO = new RestockBillDAO();
                 restockExistingBookView.getRestockButton().setOnAction(e -> {
                     String isbn = restockExistingBookView.getIsbnTF().getText();
                     Book updatedBook = booksDAO.searchBook(isbn);
@@ -32,9 +40,7 @@ public class RestockExistingBookController {
                         updatedBook.setStock(updatedBook.getStock() + quantity);
                         updatedBook.setPurchasedPrice(price);
 
-
                         if (booksDAO.updateAll()) {
-                            RestockBillDAO restockBillDAO = new RestockBillDAO();
                             if (restockBillDAO.create(new RestockBill(updatedBook, prevView.getPrevView().getCurrentUser(), quantity))) {
                                 System.out.println("Restock Bill saved successfully");
                                 restockBillDAO.printAll();
