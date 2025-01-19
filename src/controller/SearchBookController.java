@@ -10,13 +10,13 @@ import view.HomeView;
 import view.SearchBookView;
 
 public class SearchBookController {
-    private final BooksDAO booksDAO ;
+    private BooksDAO booksDAO ;
     private final SearchBookView view;
 
-    public SearchBookController(Stage stage,HomeView prevView)
+    public SearchBookController(Stage stage,HomeView prevView, BooksDAO booksDAO)
     {
         this.view =new SearchBookView(prevView);
-        this.booksDAO=new BooksDAO();
+        this.booksDAO=booksDAO;
 
         ObservableList<Book> b = FXCollections.observableArrayList(booksDAO.getAllActive());
         FilteredList <Book> books = new FilteredList<>(b,e->true);
@@ -45,4 +45,7 @@ public class SearchBookController {
         return view;
     }
 
+    public void setBooksDAO(BooksDAO booksDao) {
+        this.booksDAO = booksDao;
+    }
 }

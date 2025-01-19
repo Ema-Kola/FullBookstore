@@ -18,28 +18,13 @@ import java.util.Optional;
 
 public class HomeViewController {
         private final HomeView homeView;
-
-
-        public HomeViewController(Stage stage, User currentUser, UserController prevView){
+        private BooksDAO booksdao;
+        private UsersDAO usersDAO;
+        private PaycheckBillDAO paycheckBillDAO;
+    public HomeViewController(Stage stage, User currentUser, UserController prevView){
             this.homeView = new HomeView(currentUser,prevView);
-
             if(currentUser.getRole()== Role.MANAGER){
-                ArrayList<Book> lowInStock=new ArrayList<>();
-                BooksDAO booksDAO = new BooksDAO();
-                for(Book b : booksDAO.getAllActive()){
-                    if(b.getStock()<5){
-                        lowInStock.add(b);
-                    }
-                }
-                if(!lowInStock.isEmpty()){
-                    String message="These books are low in stock: ";
-                    for(Book b : lowInStock){
-                        message+="\n"+b.getTitle()+", stock: "+b.getStock();
-                    }
-                    Alert a = new Alert(Alert.AlertType.WARNING);
-                    a.setContentText(message);
-                    a.showAndWait();
-                }
+                lowInStockWarning();
             }
 
 
@@ -75,7 +60,7 @@ public class HomeViewController {
 
 
             homeView.getManageEmployeeButton().setOnAction(e->{
-                ManageEmployeeController ac = new ManageEmployeeController(stage,this.homeView);
+                ManageEmployeeController ac = new ManageEmployeeController(stage,this.homeView, new UsersDAO());
                 stage.setScene(ac.getView().showView(stage));
             });
 
@@ -94,42 +79,88 @@ public class HomeViewController {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setContentText("Do you want to release paychecks? Press OK to confirm.");
                 Optional<ButtonType> result = alert.showAndWait();
-                if(result.get() == ButtonType.OK) {
-                    UsersDAO usersDAO = new UsersDAO();
-                    PaycheckBillDAO paycheckBillDAO = new PaycheckBillDAO();
-                    for(User x : usersDAO.getAllActive()){
-                        PaycheckBill newPaycheck = new PaycheckBill(x,x.getSalary());
-                        System.out.println(newPaycheck.getEmployee());
-                        if(paycheckBillDAO.create(newPaycheck)){
-                            System.out.println(newPaycheck.getEmployee());
-                        }else{
-                            System.out.println("Could not save paycheck");
-                            return;
-                        }
+                 releasePaychecks(result);
 
-                    }
-                }
             });
 
             homeView.getManageLibraryButton().setOnAction(e->{
-                ManageLibraryController ac = new ManageLibraryController(stage,this.homeView);
+                ManageLibraryController ac = new ManageLibraryController(stage,this.homeView, new BooksDAO());
                 stage.setScene(ac.getView().showView(stage));
             });
 
 
             homeView.getSearchBookButton().setOnAction(e->{
-                SearchBookController gc = new SearchBookController(stage,this.homeView);
+                SearchBookController gc = new SearchBookController(stage,this.homeView, new BooksDAO());
                 stage.setScene(gc.getView().showView(stage));
             });
 
 
         }
 
+        public void releasePaychecks(Optional<ButtonType> result) {
 
+            if (result.get() == ButtonType.OK) {
+                if(this.usersDAO ==null) this.usersDAO = new UsersDAO();
+                if(this.paycheckBillDAO==null) this.paycheckBillDAO = new PaycheckBillDAO();
+                for (User x : usersDAO.getAllActive()) {
+                    PaycheckBill newPaycheck = new PaycheckBill(x, x.getSalary());
+                    System.out.println(newPaycheck.getEmployee());
+                    if (paycheckBillDAO.create(newPaycheck)) {
+                        System.out.println(newPaycheck.getEmployee());
+                    } else {
+                        System.out.println("Could not save paycheck");
+                        return;
+                    }
+
+                }
+            }
+        }
+
+        public void lowInStockWarning(){
+            ArrayList<Book> lowInStock=new ArrayList<>();
+            if(this.booksdao==null) this.booksdao = new BooksDAO();
+
+            for(Book b : booksdao.getAllActive()){
+                if(b.getStock()<5){
+                    lowInStock.add(b);
+                }
+            }
+            if(!lowInStock.isEmpty()){
+                String message="These books are low in stock: ";
+                for(Book b : lowInStock){
+                    message+="\n"+b.getTitle()+", stock: "+b.getStock();
+                }
+                Alert a = new Alert(Alert.AlertType.WARNING);
+                a.setContentText(message);
+                a.showAndWait();
+            }
+        }
         public HomeView getView(){
             return this.homeView;
         }
 
+    public BooksDAO getBooksdao() {
+        return booksdao;
+    }
+
+    public void setBooksdao(BooksDAO booksdao) {
+        this.booksdao = booksdao;
+    }
+    public UsersDAO getUsersDAO() {
+        return this.usersDAO;
+    }
+
+    public void setUsersDAO(UsersDAO usersDAO) {
+        this.usersDAO = usersDAO;
+    }
+
+    public PaycheckBillDAO getPaycheckBillDAO() {
+        return paycheckBillDAO;
+    }
+
+    public void setPaycheckBillDAO(PaycheckBillDAO paycheckBillDAO) {
+        this.paycheckBillDAO = paycheckBillDAO;
+    }
 }
 
 

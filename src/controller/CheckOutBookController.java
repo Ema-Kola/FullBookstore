@@ -16,8 +16,8 @@ import view.HomeView;
 public class CheckOutBookController {
     private final CheckOutBookView view;
     private BooksDAO booksDAO;
-    private final CustomerBillDAO customerBillDAO;
-    private final CustomerBill customerBill;
+    private CustomerBillDAO customerBillDAO;
+    private CustomerBill customerBill;
 
     public CheckOutBookController(Stage stage, HomeView prevView){
         this.view = new CheckOutBookView(prevView);
@@ -134,6 +134,13 @@ public class CheckOutBookController {
 
     public CheckOutBookView getView() {
         return view;
+    }
+    public void setCustomerBill(CustomerBill customerBill) {
+        this.customerBill = customerBill;
+    }
+
+    public void setCustomerBillDAO(CustomerBillDAO customerBillDAO) {
+        this.customerBillDAO = customerBillDAO;
     }
     public void setDao(BooksDAO booksDao){ this.booksDAO = booksDao; }
 
