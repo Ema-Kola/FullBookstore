@@ -10,6 +10,10 @@ public class PermissionsDAO extends DAO<Role>{
         super("files/permissions.dat");
     }
 
+    public PermissionsDAO(String filename){
+        super(filename);
+    }
+
     public Role getCheckOutBookPermission(){
              return super.getAll().get(0);
     }

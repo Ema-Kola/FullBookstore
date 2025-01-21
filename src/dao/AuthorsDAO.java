@@ -9,6 +9,10 @@ public class AuthorsDAO extends DAO<Author>{
             super("files/authors.dat");
         }
 
+        public AuthorsDAO(String filename){
+            super(filename);
+        }
+
 
 
     public Author searchAuthor(String name, String surname){

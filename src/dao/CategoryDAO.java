@@ -8,6 +8,9 @@ public class CategoryDAO extends DAO<String>{
            // this.categories=this.getAll();
         }
 
+        public CategoryDAO(String filepath){
+            super(filepath);
+        }
 
 
     public String searchCategory(String category){
