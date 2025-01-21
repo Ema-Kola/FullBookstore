@@ -10,6 +10,9 @@ public class CustomerBillDAO extends DAO<CustomerBill>{
         public CustomerBillDAO(){
             super("files/customerBills.dat");
         }
+        public CustomerBillDAO(String filepath){
+            super(filepath);
+        }
 
 
 

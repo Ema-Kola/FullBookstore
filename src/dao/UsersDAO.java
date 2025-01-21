@@ -9,6 +9,9 @@ public class UsersDAO extends DAO<User>{
     public UsersDAO(){
         super("files/users.dat");
     }
+    public UsersDAO(String filename){
+        super(filename);
+    }
 
     public ObservableList<User> getAllActive() {
         ObservableList<User> items = FXCollections.observableArrayList();

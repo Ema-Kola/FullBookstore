@@ -9,6 +9,10 @@ public class RestockBillDAO extends DAO<RestockBill>{
             super("files/restockBills.dat");
         }
 
+        public RestockBillDAO(String filepath){
+            super(filepath);
+        }
+
 
 }
 

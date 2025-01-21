@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class RestockBill extends Bill {
 
-    //private static final long serialVersionUID= 1;
+        private static final long serialVersionUID= 1;
 
         private Book purchasedBook;
         private int quantity;

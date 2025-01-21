@@ -12,6 +12,10 @@ public class BooksDAO extends DAO<Book>{
             super("files/books.dat");
         }
 
+        public BooksDAO(String filepath){
+            super(filepath);
+        }
+
     public ObservableList<Book> getAllActive() {
             ObservableList<Book> items = FXCollections.observableArrayList();
             for(Book b : getAll()){
