@@ -26,7 +26,7 @@ public class HomeViewController {
         private AddUserController auc;
         private AddBookController addBookController;
         private SearchBookController searchBookController;
-
+        private  CheckOutBookController checkOutBookController;
 
 
 
@@ -48,8 +48,8 @@ public class HomeViewController {
             });
 
             homeView.getCheckOutBookButton().setOnAction(e -> {
-                CheckOutBookController cc = new CheckOutBookController(stage,this.homeView);
-                stage.setScene(cc.getView().showView(stage));
+                checkOutBookController = new CheckOutBookController(stage,this.homeView);
+                stage.setScene(checkOutBookController.getView().showView(stage));
             });
 
             homeView.getBookStatsButton().setOnAction(e -> {
@@ -176,6 +176,7 @@ public class HomeViewController {
     public AddUserController getAddUserController(){return this.auc;}
     public AddBookController getAddBookController() { return addBookController;}
     public SearchBookController getSearchBookController() {return searchBookController;}
+    public CheckOutBookController getCheckOutBookController() {return checkOutBookController;}
 }
 
 

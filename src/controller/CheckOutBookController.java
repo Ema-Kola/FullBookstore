@@ -19,7 +19,14 @@ public class CheckOutBookController {
     private CustomerBillDAO customerBillDAO;
     private CustomerBill customerBill;
 
+    public void setBillsFilePath(String billsFilePath) {
+        this.billsFilePath = billsFilePath;
+    }
+
+    private String billsFilePath;
+
     public CheckOutBookController(Stage stage, HomeView prevView){
+        this.billsFilePath = "files/printedBills/";
         this.view = new CheckOutBookView(prevView);
         this.booksDAO = new BooksDAO();
         this.customerBillDAO = new CustomerBillDAO();
@@ -31,11 +38,11 @@ public class CheckOutBookController {
         this.view.getBtnHome().setOnAction(e -> {stage.setScene(prevView.showView(stage));});
         this.view.getBtnAdd().setOnAction(e -> onRecordAdd());
         this.view.getBtnDelete().setOnAction(e -> onRecordDelete());
-        this.view.getBtnPrint().setOnAction(e -> onPrintBill());
+        this.view.getBtnPrint().setOnAction(e -> onPrintBill(this.billsFilePath));
     }
 
 
-    private void onPrintBill(){
+    private void onPrintBill(String filepath){
         customerBill.setBillNo(customerBillDAO.getAll().size()+1);
         if(customerBill.getBillRecords().isEmpty()){
             Alert a = new Alert(Alert.AlertType.ERROR);
@@ -44,7 +51,7 @@ public class CheckOutBookController {
         }else{
             if(customerBillDAO.create(customerBill)){
                 System.out.println("Customer Bill saved successfully.");
-                if(customerBillDAO.printBill(customerBill)){
+                if(customerBillDAO.printBill(customerBill, filepath)){
                     System.out.println("BillNo.txt file created successfully.");
                     for (BillRecord b : customerBill.getBillRecords()) {
                         Book bookToUpdate=booksDAO.searchBook(b.getBook().getIsbn());

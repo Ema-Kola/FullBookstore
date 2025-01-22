@@ -16,8 +16,8 @@ public class CustomerBillDAO extends DAO<CustomerBill>{
 
 
 
-        public boolean printBill(CustomerBill bill){
-            File file = new File("files/printedBills/Bill"+bill.getBillNo()+".txt");
+        public boolean printBill(CustomerBill bill, String filepath){
+            File file = new File(filepath+"Bill"+bill.getBillNo()+".txt");
             if (file.exists()) {
                 System.out.println("File already exists");
                 return false;
@@ -31,6 +31,7 @@ public class CustomerBillDAO extends DAO<CustomerBill>{
 
 
         }
+
 
 
 
