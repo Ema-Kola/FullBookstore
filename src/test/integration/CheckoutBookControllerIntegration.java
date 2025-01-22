@@ -31,9 +31,10 @@ public class CheckoutBookControllerIntegration extends ApplicationTest {
     @TempDir
     static File tempFolder;
     static File tempFile;
-    private static final String TEST_BILL_FILE = "testBill.dat";
+    static File tempBooks;
 
     private CustomerBillDAO customerBillDAO;
+    private BooksDAO booksDAO;
     private CheckOutBookController controller;
 
 
@@ -48,26 +49,30 @@ public class CheckoutBookControllerIntegration extends ApplicationTest {
 
     @BeforeEach
     void caseSetup() throws Exception {
+        tempBooks = new File(tempFolder, "TestBooks.dat");
         tempFile = new File(tempFolder, "TestBill.dat");
         customerBillDAO = new CustomerBillDAO(tempFile.getAbsolutePath());
+        booksDAO = new BooksDAO(tempBooks.getAbsolutePath());
+
         controller.setCustomerBillDAO(customerBillDAO);
+        controller.setDao(booksDAO);
 
         System.out.println(tempFile.createNewFile());
     }
 
     @Test
     public void testOnPrintBill() {
-
         Book book1 = new Book("123", "title", "desc", "b", 200.0,10.0, new Author("n","l", Gender.FEMALE), 10, "");
+        booksDAO.create(book1);
+
         BillRecord bill1 = new BillRecord(book1, 5);
-        BooksDAO booksDAO = mock(BooksDAO.class);
-        when(booksDAO.searchBook("123")).thenReturn(book1);
-        when(booksDAO.updateAll()).thenReturn(true);
 
         User user = new User("John", "Doe", new Date(), Gender.FEMALE, "user","email", "pass", Role.ADMINISTRATOR, "123", 50.0);
         CustomerBill cbill = new CustomerBill(user);
-        cbill.setBillNo(999999);
+
+        cbill.setBillNo(1);
         cbill.setDate(new Date());
+
         ObservableList<BillRecord> bill = FXCollections.observableArrayList();
         bill.add(bill1);
         cbill.setBillRecords(bill);
@@ -75,7 +80,7 @@ public class CheckoutBookControllerIntegration extends ApplicationTest {
 
         controller.setCustomerBill(cbill);
         Platform.runLater(
-                ()-> {controller.onPrintBill(cbill.getBillNo());
+                ()-> {controller.onPrintBill(tempFolder.getPath());
                     });
         waitForFxEvents();
         allBills = customerBillDAO.getAll();
@@ -85,10 +90,5 @@ public class CheckoutBookControllerIntegration extends ApplicationTest {
 
     }
 
-    @AfterEach
-    void delete(){
-        File file = new File("files/printedBills/Bill999999.txt");
-        file.delete();
-    }
 
 }

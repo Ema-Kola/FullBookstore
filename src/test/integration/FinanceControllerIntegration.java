@@ -90,7 +90,6 @@ public class FinanceControllerIntegration extends ApplicationTest {
         PaycheckBill pBill1 = new PaycheckBill(user, 50.0, new Date(2004, 2, 1));
         PaycheckBill pBill2 = new PaycheckBill(user, 100.0, new Date(2004, 3, 1));
 
-        // Save them using DAOs
         customerBillDAO.create(cBill1);
         customerBillDAO.create(cBill2);
 
@@ -100,7 +99,6 @@ public class FinanceControllerIntegration extends ApplicationTest {
         paycheckBillDAO.create(pBill1);
         paycheckBillDAO.create(pBill2);
 
-        // Populate cacheMonthly based on saved data
         ObservableList<FinanceStatRecord> records = financeController.filterDate("Monthly");
 
         //income 1*10 March 2004, cost 1*20+1*50,income 2*10 April 2024, cost 1*20+1*100
@@ -129,7 +127,6 @@ public class FinanceControllerIntegration extends ApplicationTest {
         ObservableList<BillRecord> bills2 = FXCollections.observableArrayList();
         bills2.add(cb2);
 
-        // Create some real data for testing
         CustomerBill cBill1 = new CustomerBill(user, new Date(2004, 2, 1));
         cBill1.setBillRecords(bills);
         CustomerBill cBill2 = new CustomerBill(user, new Date(2004, 3, 1));
@@ -143,7 +140,6 @@ public class FinanceControllerIntegration extends ApplicationTest {
         PaycheckBill pBill1 = new PaycheckBill(user, 50.0, new Date(2005, 2, 1));
         PaycheckBill pBill2 = new PaycheckBill(user, 100.0, new Date(2006, 3, 1));
 
-        // Save them using DAOs
         customerBillDAO.create(cBill1);
         customerBillDAO.create(cBill2);
         restockBillDAO.create(rBill1);
@@ -151,7 +147,6 @@ public class FinanceControllerIntegration extends ApplicationTest {
         paycheckBillDAO.create(pBill1);
         paycheckBillDAO.create(pBill2);
 
-        // Populate cacheYearly based on saved data
         ObservableList<FinanceStatRecord> records = financeController.filterDate("Yearly");
 
 

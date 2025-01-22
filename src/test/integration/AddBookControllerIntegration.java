@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AddBookControllerIntegration extends ApplicationTest {
 
-    private static final String TEST_BOOK_FILE = "testBooks.db"; // Example database file name
+    private static final String TEST_BOOK_FILE = "testBooks.db";
     private BooksDAO booksDAO;
     private RestockBillDAO restockBillDAO;
     private AddBookController addBookController;
@@ -92,7 +92,6 @@ public class AddBookControllerIntegration extends ApplicationTest {
 
     @Test
     public void book_exists_integration_test() {
-        // First, insert a book with the same ISBN to simulate existing book
         Book existingBook = new Book("444-44-44444-44-4", "Existing Book", "Description", "Supplier", 20.0, 10.0, new Author("Jane", "Doe", Gender.FEMALE), 100, "Category");
         booksDAO.create(existingBook);
 
