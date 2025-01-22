@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import model.Author;
 import model.Book;
@@ -18,6 +19,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import view.HomeView;
 import view.ManageLibraryView;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
@@ -147,12 +149,19 @@ public class ManageLibraryTest extends ApplicationTest {
                 view.getTableView(), tablePosition, TableColumn.editCommitEvent(), 30.0
         );
 
+        when(b1.getSellingPrice()).thenReturn(30.0);
         Platform.runLater(() -> {
             view.getSellingPriceColumn().getOnEditCommit().handle(cellEditEvent);
             waitForFxEvents();
             verifyAlert.verifyAlert("Selling Price changed! 30.0");
-        });
 
+        });
+        waitForFxEvents();
+
+        Platform.runLater(()->view.getTableView().refresh());
+
+        double editedCell = view.getSellingPriceColumn().getCellData(0);  // Get the cell for the first row
+        assertEquals(30.0, editedCell, "The cell's text should reflect the updated selling price.");
 
     }
 
@@ -160,6 +169,7 @@ public class ManageLibraryTest extends ApplicationTest {
     public void testSetEditListeners_NullSellingPriceEdit() {
 
         TablePosition<Book, Double> tablePosition = new TablePosition<>(view.getTableView(), 0, view.getSellingPriceColumn());
+
 
         TableColumn.CellEditEvent<Book, Double> cellEditEvent = new TableColumn.CellEditEvent<>(
                 view.getTableView(), tablePosition, TableColumn.editCommitEvent(), null
@@ -176,7 +186,9 @@ public class ManageLibraryTest extends ApplicationTest {
     @Test
     public void testSetEditListeners_EditDescription() {
 
+
         TablePosition<Book, String> tablePosition = new TablePosition<>(view.getTableView(), 0, view.getDescriptionColumn());
+        when(b1.getDescription()).thenReturn("Something new");
 
         TableColumn.CellEditEvent<Book, String> cellEditEvent = new TableColumn.CellEditEvent<>(
                 view.getTableView(),tablePosition,TableColumn.editCommitEvent(),"Something new"
@@ -187,7 +199,14 @@ public class ManageLibraryTest extends ApplicationTest {
 
             waitForFxEvents();
             verifyAlert.verifyAlert("Description changed!");
+            press(KeyCode.ENTER).release(KeyCode.ENTER);
         });
+
+        Platform.runLater(()->view.getTableView().refresh());
+        String editedCell = view.getDescriptionColumn().getCellData(0);  // Get the cell for the first row
+        assertEquals("Something new", editedCell, "The cell's text should reflect the updated selling price.");
+
+
     }
 
     @Test
