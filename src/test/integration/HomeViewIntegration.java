@@ -28,8 +28,6 @@ public class HomeViewIntegration extends ApplicationTest {
     private BooksDAO booksDAO;
     private UsersDAO usersDAO;
     private PaycheckBillDAO paycheckBillDAO;
-
-    // Temporary files for databases
     @TempDir
     static File tempFolder;
 
