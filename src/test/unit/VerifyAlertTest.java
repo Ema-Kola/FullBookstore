@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class VerifyAlertTest extends ApplicationTest {
 
 
-    void verifyAlert(String expectedMsg) {
+    public void verifyAlert(String expectedMsg) {
         DialogPane dialogPane = lookup(".alert").queryAs(DialogPane.class);
         assertNotNull(dialogPane);
         assertEquals(expectedMsg, dialogPane.getContentText(), "Alert message should match");
