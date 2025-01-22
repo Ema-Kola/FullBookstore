@@ -16,6 +16,12 @@ public class AddBookController {
         private final AddBookView addBookView;
         private Alert alert;
         private RestockBillDAO restockBillDAO;
+
+    public Alert getAlert2() {
+        return alert2;
+    }
+
+    private Alert alert2;
         public void showAlert(Alert.AlertType type, String message) {
             alert = new Alert(type);
             alert.setContentText(message);
@@ -53,8 +59,11 @@ public class AddBookController {
                             System.out.println("Operation failed.");
                         }
 
-                        System.out.println("Book saved successfully");
-                        showAlert(Alert.AlertType.CONFIRMATION, "Book saved successfully!");
+                        alert2 = new Alert(Alert.AlertType.INFORMATION);
+                        alert2.setTitle("Book saved successfully!");
+                        alert2.setContentText("Book saved successfully!");
+                        System.out.println("Book saved successfully!");
+                        alert2.showAndWait();
 
                     } else {
                         showAlert(Alert.AlertType.ERROR, "Failed to save book.");

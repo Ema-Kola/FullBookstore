@@ -61,6 +61,10 @@ public class AddBookView extends GridPane  {
         ObservableList<String> categories = (new CategoryDAO()).getAll();
         categoryComboBox.setItems(categories);
     }
+    public void setCategories(CategoryDAO categoryDAO){
+        ObservableList<String> categories = (categoryDAO.getAll());
+        categoryComboBox.setItems(categories);
+    }
     public AddBookView(HomeView prevView){
         this.prevView = prevView;
         setAuthors();

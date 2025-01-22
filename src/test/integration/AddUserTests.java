@@ -89,6 +89,7 @@ public class AddUserTests extends ApplicationTest {
     @Test
     public void testAddUserFailsWhenUserAlreadyExists() {
         usersDAO.create(new User("Ema", "Kola", new Date(), Gender.FEMALE, "ema", "ema@lib.com", "ema123", Role.LIBRARIAN, "+355695730257", 100));
+        assertEquals(1, usersDAO.getAll().size());
 
         interact(() -> {
             addUserView.getFirstnameTF().setText("Ema");

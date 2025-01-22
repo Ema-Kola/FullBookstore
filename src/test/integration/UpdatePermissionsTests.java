@@ -3,7 +3,6 @@ package test.integration;
 import controller.UpdatePermissionsController;
 import controller.UserController;
 import dao.PermissionsDAO;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Role;
@@ -19,7 +18,6 @@ import java.io.File;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.*;
 import static org.testfx.util.WaitForAsyncUtils.waitForFxEvents;
 
 public class UpdatePermissionsTests extends ApplicationTest {

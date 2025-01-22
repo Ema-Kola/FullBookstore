@@ -80,7 +80,7 @@ public class AddAuthorTests extends ApplicationTest {
         interact(() -> {
             addAuthorView.getAuthorNameTf().setText("Ema");
             addAuthorView.getAuthorSurnameTf().setText("Kola");
-            addAuthorView.getGendercomboBox().setValue(Gender.FEMALE);
+            addAuthorView.getGendercomboBox().setValue(Gender.MALE);
         });
         waitForFxEvents();
 
@@ -88,6 +88,7 @@ public class AddAuthorTests extends ApplicationTest {
 
         Author addedAuthor = authorsDAO.searchAuthor("Ema", "Kola");
         assertNotNull(addedAuthor);
+        assertEquals(Gender.FEMALE, addedAuthor.getGender());
         assertEquals(1, authorsDAO.getAll().size());
     }
 
