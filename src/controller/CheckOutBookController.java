@@ -42,7 +42,7 @@ public class CheckOutBookController {
     }
 
 
-    private void onPrintBill(String filepath){
+    public void onPrintBill(String filepath){
         customerBill.setBillNo(customerBillDAO.getAll().size()+1);
         if(customerBill.getBillRecords().isEmpty()){
             Alert a = new Alert(Alert.AlertType.ERROR);

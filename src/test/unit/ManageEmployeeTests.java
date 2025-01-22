@@ -88,7 +88,10 @@ public class ManageEmployeeTests extends ApplicationTest {
         User matchingUser = mockUsersDao.getAll().get(0);
         User nonMatchingUser = mockUsersDao.getAll().get(2);
 
-        interact(() -> view.getSearch().setText("John"));
+        interact(() -> {
+            view.getChoiceBox().setValue("Active");
+            waitForFxEvents();
+            view.getSearch().setText("John");});
         waitForFxEvents();
 
         ObservableList<User> tableItems = view.getTableView().getItems();

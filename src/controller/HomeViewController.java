@@ -43,8 +43,8 @@ public class HomeViewController {
             });
 
             homeView.getAddUserButton().setOnAction(e -> {
-                AddUserController ac = new AddUserController(stage,this.homeView);
-                stage.setScene(ac.getView().showView(stage));
+                 auc = new AddUserController(stage,this.homeView);
+                stage.setScene(auc.getView().showView(stage));
             });
 
             homeView.getCheckOutBookButton().setOnAction(e -> {

@@ -32,6 +32,9 @@ public class ManageEmployeeController {
 
     public void setUsersDao(UsersDAO usersDao) {
         this.usersDao = usersDao;
+        filterTable();
+        setEditListeners();
+
     }
     public ManageEmployeeController(Stage stage,HomeView prevView,UsersDAO usersDao)
     {
@@ -57,32 +60,53 @@ public class ManageEmployeeController {
         setEditListeners();
 
     }
-    private void filterTable(){
-        FilteredList<User> flUser = new FilteredList<>(usersDao.getAll(), user->(user.isActive()==filterActive && !user.getRole().equals(Role.ADMINISTRATOR)));
-        FilteredList<User> flUser2 = new FilteredList<>(flUser, e->true);
+
+    private void filterTable() {
+        FilteredList<User> flUser = new FilteredList<>(usersDao.getAll(), user -> user.isActive() == filterActive && !user.getRole().equals(Role.ADMINISTRATOR));
+        FilteredList<User> flUser2 = new FilteredList<>(flUser, e -> true);
 
         view.getChoiceBox().valueProperty().addListener((ob, oldval, newval) -> {
-
-            if(newval.equals("Active")){
-                filterActive = true;
-            }else if(newval.equals("Inactive")){
-                filterActive=false;
-            }
-            flUser.setPredicate(user -> user.isActive()==filterActive && !user.getRole().equals(Role.ADMINISTRATOR));
-
-            this.view.getSearch().textProperty().addListener((obs,oldVal,newVal)->{
-                flUser2.setPredicate(user->(user.getFirstName().toLowerCase().trim().contains(newVal.toLowerCase().trim())
-                        ||user.getLastName().toLowerCase().trim().contains(newVal.toLowerCase().trim()) ||
-                        user.getEmail().toLowerCase().trim().contains(newVal.toLowerCase().trim())));
-            });
-
+            filterActive = "Active".equals(newval);
+            flUser.setPredicate(user -> user.isActive() == filterActive && !user.getRole().equals(Role.ADMINISTRATOR));
         });
 
+        view.getSearch().textProperty().addListener((obs, oldVal, newVal) -> {
+            flUser2.setPredicate(user ->
+                    user.getFirstName().toLowerCase().trim().contains(newVal.toLowerCase().trim())
+                            || user.getLastName().toLowerCase().trim().contains(newVal.toLowerCase().trim())
+                            || user.getEmail().toLowerCase().trim().contains(newVal.toLowerCase().trim())
+            );
+        });
 
         this.view.getTableView().setItems(flUser2);
-
-
     }
+
+//    private void filterTable(){
+//        FilteredList<User> flUser = new FilteredList<>(usersDao.getAll(), user->(user.isActive()==filterActive && !user.getRole().equals(Role.ADMINISTRATOR)));
+//        FilteredList<User> flUser2 = new FilteredList<>(flUser, e->true);
+//
+//        view.getChoiceBox().valueProperty().addListener((ob, oldval, newval) -> {
+//
+//            if(newval.equals("Active")){
+//                filterActive = true;
+//            }else if(newval.equals("Inactive")){
+//                filterActive=false;
+//            }
+//            flUser.setPredicate(user -> user.isActive()==filterActive && !user.getRole().equals(Role.ADMINISTRATOR));
+//
+//            this.view.getSearch().textProperty().addListener((obs,oldVal,newVal)->{
+//                flUser2.setPredicate(user->(user.getFirstName().toLowerCase().trim().contains(newVal.toLowerCase().trim())
+//                        ||user.getLastName().toLowerCase().trim().contains(newVal.toLowerCase().trim()) ||
+//                        user.getEmail().toLowerCase().trim().contains(newVal.toLowerCase().trim())));
+//            });
+//
+//        });
+//
+//
+//        this.view.getTableView().setItems(flUser2);
+//
+//
+//    }
 
     public void FireEmployee() {
         ObservableList<User> selectedEmployees = this.view.getTableView().getSelectionModel().getSelectedItems();

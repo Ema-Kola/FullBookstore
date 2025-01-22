@@ -131,7 +131,7 @@ public class UserSystemTesting extends ApplicationTest{
 
 
             clickOn(homeViewController.getView().getLogOutButton());
-            UserController uc = homeViewController.getUserControllerLogout();
+            UserController uc = homeViewController.getUserController();
 
             waitForFxEvents();
             logInView = uc.getView();

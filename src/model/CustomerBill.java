@@ -14,6 +14,8 @@ import java.util.*;
 public class CustomerBill extends Bill {
 
 
+    @Serial
+    private static final long serialVersionUID = 296705482940410488L;
     private transient ObservableList<BillRecord> billRecords;
 
     private int billNo;
@@ -31,6 +33,9 @@ public class CustomerBill extends Bill {
 
     public ObservableList<BillRecord> getBillRecords() {
         return billRecords;
+    }
+    public void setBillRecords(ObservableList<BillRecord> billRecords) {
+        this.billRecords = billRecords;
     }
 
     public int getBillNo() {
