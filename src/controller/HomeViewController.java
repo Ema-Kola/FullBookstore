@@ -21,6 +21,15 @@ public class HomeViewController {
         private BooksDAO booksdao;
         private UsersDAO usersDAO;
         private PaycheckBillDAO paycheckBillDAO;
+        private ManageEmployeeController mec;
+        private UserController uc;
+        private AddUserController auc;
+        private AddBookController addBookController;
+        private SearchBookController searchBookController;
+
+
+
+
     public HomeViewController(Stage stage, User currentUser, UserController prevView){
             this.homeView = new HomeView(currentUser,prevView);
             if(currentUser.getRole()== Role.MANAGER){
@@ -29,8 +38,8 @@ public class HomeViewController {
 
 
             homeView.getAddBookButton().setOnAction(e -> {
-                AddBookController ac = new AddBookController(stage,this.homeView);
-                stage.setScene(ac.getView().showView(stage));
+                this.addBookController = new AddBookController(stage,this.homeView);
+                stage.setScene(this.addBookController.getView().showView(stage));
             });
 
             homeView.getAddUserButton().setOnAction(e -> {
@@ -60,8 +69,8 @@ public class HomeViewController {
 
 
             homeView.getManageEmployeeButton().setOnAction(e->{
-                ManageEmployeeController ac = new ManageEmployeeController(stage,this.homeView, new UsersDAO());
-                stage.setScene(ac.getView().showView(stage));
+                mec = new ManageEmployeeController(stage,this.homeView, new UsersDAO());
+                stage.setScene(mec.getView().showView(stage));
             });
 
             homeView.getUpdatePermissionsButton().setOnAction(e -> {
@@ -70,7 +79,7 @@ public class HomeViewController {
             });
 
             homeView.getLogOutButton().setOnAction(e -> {
-                UserController uc = new UserController(stage);
+                this.uc = new UserController(stage);
                 stage.setScene(uc.getView().showView(stage));
             });
 
@@ -90,8 +99,8 @@ public class HomeViewController {
 
 
             homeView.getSearchBookButton().setOnAction(e->{
-                SearchBookController gc = new SearchBookController(stage,this.homeView, new BooksDAO());
-                stage.setScene(gc.getView().showView(stage));
+                this.searchBookController = new SearchBookController(stage,this.homeView, new BooksDAO());
+                stage.setScene(this.searchBookController.getView().showView(stage));
             });
 
 
@@ -161,6 +170,12 @@ public class HomeViewController {
     public void setPaycheckBillDAO(PaycheckBillDAO paycheckBillDAO) {
         this.paycheckBillDAO = paycheckBillDAO;
     }
+
+    public ManageEmployeeController getManageEmployeeController() {return this.mec;}
+    public UserController getUserController() {return this.uc;}
+    public AddUserController getAddUserController(){return this.auc;}
+    public AddBookController getAddBookController() { return addBookController;}
+    public SearchBookController getSearchBookController() {return searchBookController;}
 }
 
 
